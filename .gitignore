@@ -1,0 +1,20 @@
+# Secrets
+.env
+
+# WordPress - generado por el contenedor en ./app (core, plugins, themes, uploads)
+app/*
+!app/wp-config.php
+
+# Archivos temporales
+temporal.txt
+
+# WP-CLI / backups
+*.sql
+*.sql.gz
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
