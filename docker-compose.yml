@@ -38,6 +38,7 @@ services:
       WORDPRESS_DB_PASSWORD: $WORDPRESS_DB_PASSWORD
     volumes:
       - ./app:/var/www/html
+      - ./php-memory.ini:/usr/local/etc/php/conf.d/zz-memory.ini:ro
     user: "33:33"
 
 volumes:

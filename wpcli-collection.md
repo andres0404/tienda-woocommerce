@@ -50,3 +50,38 @@ if ( isset( $_SERVER['HTTP_HOST'] ) && str_contains( $_SERVER['HTTP_HOST'], 'ngr
 docker compose run --rm wpcli wp user application-password create admin "mcp" --porcelain
 ```
 `--porcelain` imprime solo la contraseña de aplicación: guárdala para configurar la conexión en Novamira / tu AI client.
+
+## Idioma español
+
+```bash
+# traducciones del core
+docker compose run --rm wpcli wp language core install es_ES
+# activar el idioma del sitio ( actualiza la opción WPLANG )
+docker compose run --rm wpcli wp site switch-language es_ES
+# traducciones de woocommerce
+docker compose run --rm wpcli wp language plugin install woocommerce es_ES
+# verificar
+docker compose run --rm wpcli wp option get WPLANG
+```
+
+Nota: WooCommerce agota los 128M de memoria que trae el CLI por defecto; `./php-memory.ini` ( montado en el servicio wpcli ) lo sube a 512M — sin él, todo comando wp-cli que cargue WP muere con "Allowed memory size exhausted".
+
+## Comandos para instalar demas plugins y temas
+
+```bash
+WP="docker compose run --rm wpcli wp "
+$WP theme install kadence
+$WP scaffold child-theme kadence-arroz --parent_theme=kadence --theme_name="Kadence Arroz" --activate
+
+$WP plugin install kadence-blocks --activate && \
+$WP plugin install advanced-custom-fields --activate && \
+$WP plugin install woo-variation-swatches --activate && \
+$WP plugin install seo-by-rank-math --activate && \
+$WP plugin install shortpixel-image-optimiser --activate 
+```
+
+## Pagos: busca el plugin antes de instalar
+```bash
+$WP plugin search wompi --fields=name,slug
+$WP plugin search epayco --fields=name,slug
+```
